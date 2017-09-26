@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+    cv:
+        image: nginx:alpine
+        container_name: cv
+        ports:
+            - 443
+        expose:
+            - 443
+        volumes:
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+            - /etc/letsencrypt/:/etc/letsencrypt/
+            - ./var/logs:/var/logs/nginx
+            - ./:/var/www/html
+        environment:
+            VIRTUAL_PROTO: https
+            VIRTUAL_PORT: 443
+            LETSENCRYPT_HOST: ${LETSENCRYPT_HOST}
+            LETSENCRYPT_EMAIL: ${LETSENCRYPT_EMAIL}
+            VIRTUAL_HOST: ${VIRTUAL_HOST}
+            DEFAULT_HOST: ${DEFAULT_HOST}
+
+networks:
+    default:
+        external:
+          name: ${NGINX_PROXY_NETWORK}
