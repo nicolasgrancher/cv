@@ -1,6 +1,5 @@
 .git
 .dockerignore
-.env.dist
 .gitignore
 docker
 docker-compose.yml
